@@ -1,0 +1,462 @@
+---
+const hours = Array.from({ length: 18 }, (_, i) => i + 5);
+---
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" href="/favicon.ico" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Daily Timebox Planner</title>
+	</head>
+	<body>
+		<header>
+			<h1>Daily Timebox Planner</h1>
+			<div class="header-actions">
+				<input type="date" class="date-picker" />
+				<button class="toggle-panels" onclick="toggleSidebar()">Notes</button>
+				<button class="clear-btn" onclick="clearData()">Clear</button>
+				<button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+					<svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<circle cx="12" cy="12" r="5"></circle>
+						<line x1="12" y1="1" x2="12" y2="3"></line>
+						<line x1="12" y1="21" x2="12" y2="23"></line>
+						<line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+						<line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+						<line x1="1" y1="12" x2="3" y2="12"></line>
+						<line x1="21" y1="12" x2="23" y2="12"></line>
+						<line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+						<line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+					</svg>
+					<svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+					</svg>
+				</button>
+			</div>
+		</header>
+
+		<div class="layout">
+			<main>
+				<table class="timebox">
+					<thead>
+						<tr>
+							<th class="hour-col"></th>
+							<th>:00</th>
+							<th>:30</th>
+						</tr>
+					</thead>
+					<tbody>
+						{hours.map((hour) => (
+							<tr>
+								<td class="hour-label">{hour}</td>
+								<td class="slot"><input type="text" /></td>
+								<td class="slot"><input type="text" /></td>
+							</tr>
+						))}
+					</tbody>
+				</table>
+			</main>
+
+			<aside class="sidebar" id="sidebar">
+				<div class="panel">
+					<h2>Top Priorities</h2>
+					<div class="priorities">
+						<input type="text" placeholder="1." />
+						<input type="text" placeholder="2." />
+						<input type="text" placeholder="3." />
+					</div>
+				</div>
+				<div class="panel braindump">
+					<h2>Brain Dump</h2>
+					<textarea placeholder="Whatever's on your mind..."></textarea>
+				</div>
+			</aside>
+		</div>
+
+		<script is:inline>
+			function clearData() {
+				document.querySelectorAll('input[type="text"]').forEach(input => input.value = '');
+				document.querySelector('textarea').value = '';
+			}
+
+			function toggleSidebar() {
+				const sidebar = document.getElementById('sidebar');
+				const btn = document.querySelector('.toggle-panels');
+				sidebar.classList.toggle('open');
+				btn.classList.toggle('active');
+			}
+
+			function toggleTheme() {
+				const isLight = document.body.classList.toggle('light');
+				localStorage.setItem('timebox-theme', isLight ? 'light' : 'dark');
+			}
+
+			// Restore saved theme
+			if (localStorage.getItem('timebox-theme') === 'light') {
+				document.body.classList.add('light');
+			}
+		</script>
+
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+
+			body {
+				font-family: Arial, Helvetica, sans-serif;
+				background-color: black;
+				color: white;
+				height: 100vh;
+				display: flex;
+				flex-direction: column;
+			}
+
+			/* Header */
+			header {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				padding: 16px 24px;
+				border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+				flex-shrink: 0;
+			}
+
+			h1 {
+				font-size: 18px;
+				font-weight: 600;
+				letter-spacing: -0.01em;
+			}
+
+			.header-actions {
+				display: flex;
+				align-items: center;
+				gap: 8px;
+			}
+
+			.date-picker {
+				background: transparent;
+				color: white;
+				border: 1px solid rgba(255, 255, 255, 0.2);
+				border-radius: 6px;
+				padding: 6px 10px;
+				font-family: inherit;
+				font-size: 13px;
+				color-scheme: dark;
+			}
+
+			.toggle-panels,
+			.clear-btn {
+				background: transparent;
+				color: rgba(255, 255, 255, 0.6);
+				border: 1px solid rgba(255, 255, 255, 0.2);
+				border-radius: 6px;
+				padding: 6px 14px;
+				font-family: inherit;
+				font-size: 13px;
+				cursor: pointer;
+				transition: all 0.15s ease;
+			}
+
+			.toggle-panels:hover,
+			.clear-btn:hover {
+				color: white;
+				border-color: rgba(255, 255, 255, 0.4);
+			}
+
+			.toggle-panels.active {
+				color: white;
+				background: rgba(255, 255, 255, 0.1);
+				border-color: rgba(255, 255, 255, 0.3);
+			}
+
+			/* Layout */
+			.layout {
+				flex: 1;
+				display: flex;
+				overflow: hidden;
+			}
+
+			main {
+				flex: 1;
+				overflow-y: auto;
+				padding: 16px 24px;
+			}
+
+			/* Timebox grid */
+			.timebox {
+				border-collapse: collapse;
+				width: 100%;
+				table-layout: fixed;
+			}
+
+			.timebox thead th {
+				font-size: 12px;
+				font-weight: 500;
+				color: rgba(255, 255, 255, 0.4);
+				text-align: left;
+				padding: 0 0 8px 8px;
+				border: none;
+			}
+
+			.timebox th.hour-col {
+				width: 48px;
+			}
+
+			.timebox .hour-label {
+				font-size: 13px;
+				color: rgba(255, 255, 255, 0.4);
+				text-align: right;
+				padding-right: 12px;
+				border: none;
+				vertical-align: top;
+				padding-top: 7px;
+				width: 48px;
+			}
+
+			.timebox .slot {
+				border: 1px solid rgba(255, 255, 255, 0.12);
+				padding: 0;
+				height: 36px;
+			}
+
+			.timebox .slot input {
+				display: block;
+				width: 100%;
+				height: 100%;
+				background: transparent;
+				color: white;
+				border: none;
+				padding: 0 8px;
+				font-family: inherit;
+				font-size: 14px;
+				outline: none;
+				caret-color: white;
+			}
+
+			.timebox .slot:hover {
+				background: rgba(255, 255, 255, 0.03);
+				transition: background 0.15s ease;
+			}
+
+			.timebox .slot:focus-within {
+				background: rgba(255, 255, 255, 0.04);
+			}
+
+			/* Sidebar */
+			.sidebar {
+				width: 0;
+				overflow: hidden;
+				border-left: 1px solid transparent;
+				transition: width 0.2s ease, padding 0.2s ease, border-color 0.2s ease;
+				display: flex;
+				flex-direction: column;
+				flex-shrink: 0;
+			}
+
+			.sidebar.open {
+				width: 320px;
+				padding: 16px;
+				border-left-color: rgba(255, 255, 255, 0.1);
+			}
+
+			.panel {
+				margin-bottom: 20px;
+			}
+
+			.panel h2 {
+				font-size: 13px;
+				font-weight: 600;
+				color: rgba(255, 255, 255, 0.5);
+				text-transform: uppercase;
+				letter-spacing: 0.05em;
+				margin-bottom: 10px;
+			}
+
+			.priorities {
+				display: flex;
+				flex-direction: column;
+				gap: 6px;
+			}
+
+			.priorities input {
+				background: rgba(255, 255, 255, 0.05);
+				color: white;
+				border: 1px solid rgba(255, 255, 255, 0.1);
+				border-radius: 6px;
+				padding: 10px 12px;
+				font-family: inherit;
+				font-size: 14px;
+				outline: none;
+				caret-color: white;
+			}
+
+			.priorities input:focus {
+				background: rgba(255, 255, 255, 0.08);
+				border-color: rgba(255, 255, 255, 0.2);
+			}
+
+			.priorities input::placeholder {
+				color: rgba(255, 255, 255, 0.25);
+			}
+
+			.braindump {
+				flex: 1;
+				display: flex;
+				flex-direction: column;
+			}
+
+			.braindump textarea {
+				flex: 1;
+				background: rgba(255, 255, 255, 0.05);
+				color: white;
+				border: 1px solid rgba(255, 255, 255, 0.1);
+				border-radius: 6px;
+				padding: 10px 12px;
+				font-family: inherit;
+				font-size: 14px;
+				resize: none;
+				outline: none;
+				caret-color: white;
+				min-height: 150px;
+			}
+
+			.braindump textarea:focus {
+				background: rgba(255, 255, 255, 0.08);
+				border-color: rgba(255, 255, 255, 0.2);
+			}
+
+			.braindump textarea::placeholder {
+				color: rgba(255, 255, 255, 0.25);
+			}
+
+			/* Theme toggle button */
+			.theme-toggle {
+				background: transparent;
+				color: rgba(255, 255, 255, 0.6);
+				border: 1px solid rgba(255, 255, 255, 0.2);
+				border-radius: 6px;
+				padding: 6px 8px;
+				cursor: pointer;
+				transition: all 0.15s ease;
+				display: flex;
+				align-items: center;
+			}
+
+			.theme-toggle:hover {
+				color: white;
+				border-color: rgba(255, 255, 255, 0.4);
+			}
+
+			.icon-moon { display: none; }
+			.icon-sun { display: block; }
+
+			/* ---- Light mode ---- */
+			body.light {
+				background-color: #f5f5f5;
+				color: #1a1a1a;
+			}
+
+			body.light header {
+				border-bottom-color: rgba(0, 0, 0, 0.1);
+			}
+
+			body.light .date-picker {
+				color: #1a1a1a;
+				border-color: rgba(0, 0, 0, 0.2);
+				color-scheme: light;
+			}
+
+			body.light .toggle-panels,
+			body.light .clear-btn,
+			body.light .theme-toggle {
+				color: rgba(0, 0, 0, 0.5);
+				border-color: rgba(0, 0, 0, 0.2);
+			}
+
+			body.light .toggle-panels:hover,
+			body.light .clear-btn:hover,
+			body.light .theme-toggle:hover {
+				color: #1a1a1a;
+				border-color: rgba(0, 0, 0, 0.4);
+			}
+
+			body.light .toggle-panels.active {
+				color: #1a1a1a;
+				background: rgba(0, 0, 0, 0.06);
+				border-color: rgba(0, 0, 0, 0.3);
+			}
+
+			body.light .icon-moon { display: block; }
+			body.light .icon-sun { display: none; }
+
+			body.light .timebox thead th {
+				color: rgba(0, 0, 0, 0.4);
+			}
+
+			body.light .timebox .hour-label {
+				color: rgba(0, 0, 0, 0.4);
+			}
+
+			body.light .timebox .slot {
+				border-color: rgba(0, 0, 0, 0.12);
+			}
+
+			body.light .timebox .slot input {
+				color: #1a1a1a;
+				caret-color: #1a1a1a;
+			}
+
+			body.light .timebox .slot:hover {
+				background: rgba(0, 0, 0, 0.03);
+			}
+
+			body.light .timebox .slot:focus-within {
+				background: rgba(0, 0, 0, 0.04);
+			}
+
+			body.light .sidebar.open {
+				border-left-color: rgba(0, 0, 0, 0.1);
+			}
+
+			body.light .panel h2 {
+				color: rgba(0, 0, 0, 0.5);
+			}
+
+			body.light .priorities input {
+				background: rgba(0, 0, 0, 0.03);
+				color: #1a1a1a;
+				border-color: rgba(0, 0, 0, 0.1);
+				caret-color: #1a1a1a;
+			}
+
+			body.light .priorities input:focus {
+				background: rgba(0, 0, 0, 0.05);
+				border-color: rgba(0, 0, 0, 0.2);
+			}
+
+			body.light .priorities input::placeholder {
+				color: rgba(0, 0, 0, 0.25);
+			}
+
+			body.light .braindump textarea {
+				background: rgba(0, 0, 0, 0.03);
+				color: #1a1a1a;
+				border-color: rgba(0, 0, 0, 0.1);
+				caret-color: #1a1a1a;
+			}
+
+			body.light .braindump textarea:focus {
+				background: rgba(0, 0, 0, 0.05);
+				border-color: rgba(0, 0, 0, 0.2);
+			}
+
+			body.light .braindump textarea::placeholder {
+				color: rgba(0, 0, 0, 0.25);
+			}
+		</style>
+	</body>
+</html>

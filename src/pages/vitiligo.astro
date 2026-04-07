@@ -1,0 +1,520 @@
+---
+import ImageGallery from "../components/vitiligo/ImageGallery.astro";
+import TimelineSidebar from "../components/vitiligo/TimelineSidebar.astro";
+import { entries } from "../data/vitiligo-entries";
+
+const entryDates = entries.map((e) => e.date);
+const years = entries.map((e) => parseInt(e.date.split("-")[0]));
+const startYear = Math.min(...years);
+const endYear = Math.max(...years);
+
+const monthNames = [
+  "January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December",
+];
+
+function formatDate(date: string): string {
+  const [y, m] = date.split("-");
+  return `${monthNames[parseInt(m) - 1]} ${y}`;
+}
+
+// Group entries by year for compare view
+const entriesByYear: Record<string, typeof entries> = {};
+for (const entry of entries) {
+  const year = entry.date.split("-")[0];
+  if (!entriesByYear[year]) entriesByYear[year] = [];
+  entriesByYear[year].push(entry);
+}
+const availableYears = Object.keys(entriesByYear).sort(
+  (a, b) => parseInt(b) - parseInt(a)
+);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HeyMart Vitiligo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script is:inline>
+      if (localStorage.getItem("vitiligo-theme") === "light") {
+        document.documentElement.setAttribute("data-theme", "light");
+      }
+    </script>
+  </head>
+  <body>
+    <!-- Controls -->
+    <div class="top-controls" id="top-controls">
+      <div class="mode-toggle" id="mode-toggle">
+        <button id="btn-timeline" class="active">Timeline</button>
+        <button id="btn-compare">Compare</button>
+      </div>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+        <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- TIMELINE VIEW -->
+    <div class="view timeline-view" id="timeline-view">
+      <TimelineSidebar
+        entryDates={entryDates}
+        startYear={startYear}
+        endYear={endYear}
+      />
+      <main class="timeline-content" id="timeline-content">
+        {entries.map((entry) => (
+          <section
+            class="entry"
+            id={`entry-${entry.date}`}
+            data-date={entry.date}
+          >
+            <h2>{formatDate(entry.date)}</h2>
+            {entry.text.split("\n\n").map((p) => (
+              <p>{p}</p>
+            ))}
+            <ImageGallery images={entry.images} />
+          </section>
+        ))}
+      </main>
+    </div>
+
+    <!-- COMPARE VIEW -->
+    <div class="view compare-view hidden" id="compare-view">
+      <div class="compare-title-strip">
+        <span class="compare-title-text">VITILIGO</span>
+      </div>
+      <div class="compare-header">
+        <select id="compare-left-year">
+          {availableYears.map((y, i) => (
+            <option value={y} selected={i === 0}>
+              {y}
+            </option>
+          ))}
+        </select>
+        <span class="compare-vs">vs</span>
+        <select id="compare-right-year">
+          {availableYears.map((y, i) => (
+            <option value={y} selected={i === availableYears.length - 1}>
+              {y}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div class="compare-columns">
+        <div class="compare-col" id="compare-col-left">
+          {availableYears.map((year) => (
+            <div class="compare-year-group" data-year={year}>
+              {entriesByYear[year].map((entry) => (
+                <div class="entry">
+                  <h2>{formatDate(entry.date)}</h2>
+                  {entry.text.split("\n\n").map((p) => (
+                    <p>{p}</p>
+                  ))}
+                  <ImageGallery images={entry.images} />
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+        <div class="compare-col" id="compare-col-right">
+          {availableYears.map((year) => (
+            <div class="compare-year-group" data-year={year}>
+              {entriesByYear[year].map((entry) => (
+                <div class="entry">
+                  <h2>{formatDate(entry.date)}</h2>
+                  {entry.text.split("\n\n").map((p) => (
+                    <p>{p}</p>
+                  ))}
+                  <ImageGallery images={entry.images} />
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <style>
+      :root {
+        --bg: #0f0f0f;
+        --bg-secondary: #1a1a1a;
+        --bg-hover: #1e1e1e;
+        --text: #e8e8e8;
+        --text-secondary: #bbb;
+        --text-muted: #666;
+        --text-faint: #3a3a3a;
+        --border: #2a2a2a;
+        --shadow: rgba(0, 0, 0, 0.3);
+        --strip-bg: #1a1a1a;
+        --strip-text: #666;
+        --gallery-bg: #1e1e1e;
+        --gallery-border: #2a2a2a;
+        --placeholder-bg: #252525;
+      }
+
+      [data-theme="light"] {
+        --bg: #fff;
+        --bg-secondary: #f5f5f5;
+        --bg-hover: #f0f0f0;
+        --text: #111;
+        --text-secondary: #333;
+        --text-muted: #888;
+        --text-faint: #bbb;
+        --border: #e0e0e0;
+        --shadow: rgba(0, 0, 0, 0.06);
+        --strip-bg: #111;
+        --strip-text: #fff;
+        --gallery-bg: #f0f0f0;
+        --gallery-border: #e0e0e0;
+        --placeholder-bg: #e8e8e8;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.6;
+        transition: background 0.2s, color 0.2s;
+      }
+
+      .hidden {
+        display: none !important;
+      }
+
+      /* ---- Top Controls ---- */
+      .top-controls {
+        position: fixed;
+        top: 1rem;
+        right: 1.5rem;
+        z-index: 100;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .mode-toggle {
+        display: flex;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        overflow: hidden;
+        background: var(--bg);
+        box-shadow: 0 1px 4px var(--shadow);
+      }
+
+      .mode-toggle button {
+        padding: 0.45rem 1rem;
+        border: none;
+        background: var(--bg);
+        font-family: inherit;
+        font-size: 0.8rem;
+        font-weight: 500;
+        cursor: pointer;
+        color: var(--text-muted);
+        transition: all 0.15s;
+      }
+
+      .mode-toggle button.active {
+        background: var(--text);
+        color: var(--bg);
+      }
+
+      .mode-toggle button:hover:not(.active) {
+        background: var(--bg-hover);
+        color: var(--text-secondary);
+      }
+
+      .theme-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 34px;
+        height: 34px;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        background: var(--bg);
+        color: var(--text-muted);
+        cursor: pointer;
+        box-shadow: 0 1px 4px var(--shadow);
+        transition: all 0.15s;
+      }
+
+      .theme-toggle:hover {
+        color: var(--text);
+        border-color: var(--text-muted);
+      }
+
+      /* Dark mode (default): show sun icon to switch to light */
+      .theme-toggle .icon-moon { display: none; }
+      .theme-toggle .icon-sun { display: block; }
+      [data-theme="light"] .theme-toggle .icon-sun { display: none; }
+      [data-theme="light"] .theme-toggle .icon-moon { display: block; }
+
+      /* ---- TIMELINE VIEW ---- */
+      .timeline-view {
+        min-height: 100vh;
+      }
+
+      .timeline-content {
+        max-width: 720px;
+        margin-left: 210px;
+        padding: 3rem 2.5rem 6rem;
+      }
+
+      .entry {
+        margin-bottom: 4rem;
+      }
+
+      .entry h2 {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 0.75rem;
+        letter-spacing: -0.02em;
+      }
+
+      .entry p {
+        font-size: 1rem;
+        color: var(--text-secondary);
+        line-height: 1.75;
+        margin-bottom: 0.5rem;
+      }
+
+      /* ---- COMPARE VIEW ---- */
+      .compare-view {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+      }
+
+      .compare-title-strip {
+        position: fixed;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 40px;
+        background: var(--strip-bg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10;
+      }
+
+      .compare-title-text {
+        color: var(--strip-text);
+        font-weight: 700;
+        font-size: 0.7rem;
+        letter-spacing: 0.2em;
+        writing-mode: vertical-rl;
+        transform: rotate(180deg);
+      }
+
+      .compare-header {
+        margin-left: 40px;
+        padding: 0.75rem 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        border-bottom: 1px solid var(--border);
+        background: var(--bg);
+        z-index: 5;
+        flex-shrink: 0;
+      }
+
+      .compare-header select {
+        font-family: inherit;
+        font-size: 1rem;
+        font-weight: 600;
+        padding: 0.4rem 0.75rem;
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        background: var(--bg);
+        color: var(--text);
+        cursor: pointer;
+      }
+
+      .compare-vs {
+        font-size: 0.95rem;
+        font-weight: 500;
+        color: var(--text-muted);
+      }
+
+      .compare-columns {
+        display: flex;
+        flex: 1;
+        margin-left: 40px;
+        overflow: hidden;
+      }
+
+      .compare-col {
+        flex: 1;
+        overflow-y: auto;
+        padding: 2rem;
+      }
+
+      .compare-col:first-child {
+        border-right: 1px solid var(--border);
+      }
+
+      .compare-col .entry {
+        margin-bottom: 3rem;
+      }
+
+      .compare-col .entry h2 {
+        font-size: 1.5rem;
+      }
+
+      /* ---- Responsive ---- */
+      @media (max-width: 768px) {
+        .top-controls {
+          top: 0.75rem;
+          right: 0.75rem;
+        }
+
+        .timeline-content {
+          margin-left: 0;
+          padding: 2rem 1.25rem 4rem;
+        }
+
+        .entry h2 {
+          font-size: 1.5rem;
+        }
+
+        .compare-columns {
+          flex-direction: column;
+        }
+
+        .compare-col:first-child {
+          border-right: none;
+          border-bottom: 1px solid var(--border);
+        }
+
+        .compare-col {
+          padding: 1.5rem;
+        }
+      }
+    </style>
+
+    <script>
+      // ---- Theme Toggle ----
+      const themeToggle = document.getElementById("theme-toggle")!;
+      themeToggle.addEventListener("click", () => {
+        const isLight =
+          document.documentElement.getAttribute("data-theme") === "light";
+        if (isLight) {
+          document.documentElement.removeAttribute("data-theme");
+          localStorage.setItem("vitiligo-theme", "dark");
+        } else {
+          document.documentElement.setAttribute("data-theme", "light");
+          localStorage.setItem("vitiligo-theme", "light");
+        }
+      });
+
+      // ---- Mode Toggle ----
+      const btnTimeline = document.getElementById("btn-timeline")!;
+      const btnCompare = document.getElementById("btn-compare")!;
+      const timelineView = document.getElementById("timeline-view")!;
+      const compareView = document.getElementById("compare-view")!;
+
+      btnTimeline.addEventListener("click", () => {
+        timelineView.classList.remove("hidden");
+        compareView.classList.add("hidden");
+        btnTimeline.classList.add("active");
+        btnCompare.classList.remove("active");
+      });
+
+      btnCompare.addEventListener("click", () => {
+        compareView.classList.remove("hidden");
+        timelineView.classList.add("hidden");
+        btnCompare.classList.add("active");
+        btnTimeline.classList.remove("active");
+      });
+
+      // ---- Timeline Scroll Sync ----
+      const entrySections = document.querySelectorAll<HTMLElement>(
+        "#timeline-content .entry"
+      );
+      const sidebar = document.getElementById("timeline-sidebar");
+
+      const observer = new IntersectionObserver(
+        (observed) => {
+          for (const oe of observed) {
+            if (oe.isIntersecting) {
+              const date = (oe.target as HTMLElement).dataset.date;
+              document
+                .querySelectorAll(".tl-month.active")
+                .forEach((el) => el.classList.remove("active"));
+              const monthEl = document.querySelector(
+                `.tl-month[data-date="${date}"]`
+              );
+              if (monthEl) {
+                monthEl.classList.add("active");
+                // Keep active month visible in sidebar
+                monthEl.scrollIntoView({ block: "nearest", behavior: "smooth" });
+              }
+            }
+          }
+        },
+        { rootMargin: "-5% 0px -85% 0px" }
+      );
+
+      entrySections.forEach((s) => observer.observe(s));
+
+      // ---- Timeline Click Navigation ----
+      document.querySelectorAll(".tl-month.has-entry").forEach((el) => {
+        el.addEventListener("click", (e) => {
+          e.preventDefault();
+          const date = (el as HTMLElement).dataset.date;
+          const target = document.getElementById(`entry-${date}`);
+          if (target) {
+            target.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+        });
+      });
+
+      // ---- Compare Year Switching ----
+      function updateCompareColumn(side: string, year: string) {
+        const col = document.getElementById(`compare-col-${side}`);
+        if (!col) return;
+        col.querySelectorAll<HTMLElement>(".compare-year-group").forEach((g) => {
+          g.style.display = g.dataset.year === year ? "" : "none";
+        });
+        col.scrollTop = 0;
+      }
+
+      const leftSelect = document.getElementById(
+        "compare-left-year"
+      ) as HTMLSelectElement;
+      const rightSelect = document.getElementById(
+        "compare-right-year"
+      ) as HTMLSelectElement;
+
+      leftSelect.addEventListener("change", () =>
+        updateCompareColumn("left", leftSelect.value)
+      );
+      rightSelect.addEventListener("change", () =>
+        updateCompareColumn("right", rightSelect.value)
+      );
+
+      // Init compare columns
+      updateCompareColumn("left", leftSelect.value);
+      updateCompareColumn("right", rightSelect.value);
+    </script>
+  </body>
+</html>

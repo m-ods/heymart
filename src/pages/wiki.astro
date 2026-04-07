@@ -1,0 +1,483 @@
+---
+const title = "Martin Schweiger";
+const subtitle = "Software engineer and builder";
+---
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>{title} - Heypedia, the free encyclopedia</title>
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="stylesheet" href="/wiki-css/site.css" />
+		<style is:global>
+			/* Reset & base */
+			*, *::before, *::after {
+				box-sizing: border-box;
+			}
+			body {
+				background: #f8f9fa;
+				margin: 0;
+				font-family: sans-serif;
+				color: #202122;
+				font-size: 14px;
+				line-height: 1.6;
+			}
+			.mw-logo-wordmark-text {
+				font-family: 'Linux Libertine', 'Georgia', 'Times', serif;
+				font-size: 1.6em;
+				color: #000;
+				text-decoration: none;
+			}
+			.mw-logo-tagline-text {
+				font-family: 'Linux Libertine', 'Georgia', 'Times', serif;
+				font-size: 0.8em;
+				color: #54595d;
+				display: block;
+			}
+			.mw-logo {
+				display: flex;
+				align-items: center;
+				gap: 0.5em;
+				text-decoration: none;
+			}
+			.mw-logo-icon-custom {
+				font-size: 2em;
+				line-height: 1;
+			}
+
+			/* Page layout: sidebar TOC + content */
+			.wiki-layout {
+				display: grid;
+				grid-template-columns: 220px 1fr;
+				max-width: 1200px;
+				margin: 0 auto;
+				gap: 0;
+			}
+
+			/* Sticky sidebar TOC */
+			.vector-toc-container {
+				border-right: 1px solid #eaecf0;
+				padding: 1em 0.75em 2em 1em;
+				position: sticky;
+				top: 0;
+				align-self: start;
+				height: 100vh;
+				overflow-y: auto;
+				font-size: 14px;
+				font-family: sans-serif;
+				background: #fff;
+			}
+			.vector-toc-container .toc-heading {
+				font-size: 0.875em;
+				font-weight: 700;
+				color: #202122;
+				text-transform: none;
+				padding: 0.5em 0;
+				margin: 0;
+			}
+			.vector-toc-container ul {
+				list-style: none;
+				margin: 0;
+				padding: 0;
+			}
+			.vector-toc-container li {
+				margin: 0;
+			}
+			.vector-toc-container a {
+				display: block;
+				padding: 0.35em 0 0.35em 0;
+				color: #202122;
+				text-decoration: none;
+				font-size: 0.875em;
+				line-height: 1.4;
+				border-left: 3px solid transparent;
+				padding-left: 0.75em;
+			}
+			.vector-toc-container a:hover {
+				color: #0645ad;
+				border-left-color: #0645ad;
+			}
+			.vector-toc-container a.active {
+				color: #0645ad;
+				border-left-color: #0645ad;
+				font-weight: 600;
+			}
+			.vector-toc-container .toc-sub {
+				padding-left: 1em;
+			}
+			.vector-toc-container .toc-sub a {
+				font-size: 0.8125em;
+				color: #54595d;
+			}
+			.vector-toc-container .toc-sub a:hover {
+				color: #0645ad;
+			}
+
+			/* Article content area */
+			.wiki-content {
+				padding: 0 2em 2em 1.5em;
+				min-width: 0;
+				background: #fff;
+			}
+
+			/* Infobox */
+			.infobox {
+				border: 1px solid #a2a9b1;
+				border-spacing: 3px;
+				background-color: #f8f9fa;
+				color: #000;
+				margin: 0.5em 0 0.5em 1em;
+				padding: 0.2em;
+				float: right;
+				clear: right;
+				font-size: 88%;
+				line-height: 1.5em;
+				width: 22em;
+			}
+			.infobox-title {
+				font-size: 125%;
+				font-weight: bold;
+				text-align: center;
+				padding: 0.4em;
+				background-color: #ddd;
+			}
+			.infobox-image {
+				text-align: center;
+				padding: 0.5em;
+			}
+			.infobox-image .placeholder-img {
+				width: 220px;
+				height: 280px;
+				background: linear-gradient(135deg, #e8e8e8 0%, #d0d0d0 100%);
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				color: #72777d;
+				font-size: 0.85em;
+				border: 1px solid #c8ccd1;
+				margin: 0 auto;
+			}
+			.infobox-label {
+				vertical-align: top;
+				text-align: left;
+				padding: 0.3em 0.6em;
+				font-weight: bold;
+				background-color: #e8e8e8;
+			}
+			.infobox-data {
+				vertical-align: top;
+				text-align: left;
+				padding: 0.3em 0.6em;
+			}
+
+			/* Headings */
+			.mw-headline {
+				border: none;
+			}
+			h2 .mw-headline {
+				font-size: inherit;
+				font-weight: inherit;
+			}
+			.mw-parser-output h2 {
+				font-size: 1.5em;
+				font-weight: 400;
+				border-bottom: 1px solid #a2a9b1;
+				margin-top: 1em;
+				padding-bottom: 0.25em;
+				font-family: 'Linux Libertine', 'Georgia', 'Times', serif;
+			}
+			.mw-parser-output h3 {
+				font-size: 1.2em;
+				font-weight: bold;
+				margin-top: 0.8em;
+				font-family: Arial, Helvetica, sans-serif;
+			}
+			.mw-parser-output p {
+				margin-top: 0.5em;
+				margin-bottom: 0.5em;
+				line-height: 1.6;
+			}
+			.mw-parser-output a {
+				color: #0645ad;
+				text-decoration: none;
+			}
+			.mw-parser-output a:hover {
+				text-decoration: underline;
+			}
+			.mw-parser-output {
+				color: #202122;
+			}
+
+			/* References */
+			.reflist {
+				font-size: 90%;
+				margin-top: 0.5em;
+			}
+			.reflist ol {
+				margin-left: 2em;
+			}
+			.reference {
+				font-size: 80%;
+				vertical-align: super;
+				line-height: 0;
+			}
+			sup.reference a {
+				color: #0645ad;
+			}
+
+			/* Header */
+			.vector-header-container {
+				min-height: unset;
+				border-bottom: 1px solid #eaecf0;
+				background: #fff;
+			}
+			.vector-header {
+				max-width: 1200px;
+				margin: 0 auto;
+				padding: 0.5em 1em;
+			}
+
+			/* Article heading */
+			#firstHeading {
+				font-family: 'Linux Libertine', 'Georgia', 'Times', serif;
+				font-size: 1.8em;
+				font-weight: 400;
+				margin-bottom: 0.25em;
+				line-height: 1.3;
+				border-bottom: 1px solid #a2a9b1;
+				padding-bottom: 0.15em;
+			}
+			#siteSub {
+				color: #54595d;
+				font-size: 0.85em;
+				margin-bottom: 1.5em;
+				font-family: sans-serif;
+			}
+
+			/* Categories */
+			.catlinks {
+				background: #f8f9fa;
+				border: 1px solid #a2a9b1;
+				padding: 5px;
+				margin-top: 2em;
+				font-size: 0.9em;
+			}
+			.catlinks a {
+				color: #0645ad;
+				text-decoration: none;
+			}
+
+			/* Mobile: collapse sidebar */
+			@media screen and (max-width: 900px) {
+				.wiki-layout {
+					grid-template-columns: 1fr;
+				}
+				.vector-toc-container {
+					position: static;
+					height: auto;
+					border-right: none;
+					border-bottom: 1px solid #eaecf0;
+					padding: 0.75em 1em;
+				}
+				.wiki-content {
+					padding: 0 1em 2em;
+				}
+				.infobox {
+					float: none;
+					margin: 0.5em auto;
+					width: 100%;
+					max-width: 22em;
+				}
+			}
+		</style>
+	</head>
+	<body class="mediawiki ltr sitedir-ltr">
+
+		<!-- Header -->
+		<div class="vector-header-container">
+			<header class="vector-header mw-header">
+				<div class="vector-header-start">
+					<a href="/wiki" class="mw-logo">
+						<span class="mw-logo-icon-custom">&#x1f310;</span>
+						<span class="mw-logo-container">
+							<span class="mw-logo-wordmark-text">Heypedia</span>
+							<span class="mw-logo-tagline-text">The Free Encyclopedia</span>
+						</span>
+					</a>
+				</div>
+			</header>
+		</div>
+
+		<!-- Layout: Sidebar TOC + Article -->
+		<div class="wiki-layout">
+
+			<!-- Sticky left sidebar TOC -->
+			<nav class="vector-toc-container" aria-label="Contents">
+				<p class="toc-heading">Contents</p>
+				<ul>
+					<li><a href="#top">(Top)</a></li>
+					<li>
+						<a href="#early-life">Early life</a>
+						<ul class="toc-sub">
+							<li><a href="#internet-culture">Internet culture</a></li>
+							<li><a href="#programming">Introduction to programming</a></li>
+							<li><a href="#video-editing">Video editing</a></li>
+						</ul>
+					</li>
+					<li><a href="#career">Career</a></li>
+					<li><a href="#personal-life">Personal life</a></li>
+					<li><a href="#references">References</a></li>
+					<li><a href="#external-links">External links</a></li>
+				</ul>
+			</nav>
+
+			<!-- Article content -->
+			<div class="wiki-content">
+				<div id="siteSub">From Heypedia, the free encyclopedia</div>
+
+				<h1 id="firstHeading">{title}</h1>
+
+				<div id="mw-content-text" class="mw-body-content">
+					<div class="mw-content-ltr mw-parser-output" lang="en" dir="ltr">
+
+						<!-- Infobox -->
+						<table class="infobox">
+							<tr><td colspan="2" class="infobox-title">Martin Schweiger</td></tr>
+							<tr><td colspan="2" class="infobox-image">
+								<div class="placeholder-img">[ Photo ]</div>
+							</td></tr>
+							<tr><td class="infobox-label">Born</td><td class="infobox-data">19 January 2001<br /><a href="https://en.wikipedia.org/wiki/Munich">Munich</a>, Germany</td></tr>
+							<tr><td class="infobox-label">Nationality</td><td class="infobox-data">Brazilian</td></tr>
+							<tr><td class="infobox-label">Residence</td><td class="infobox-data"><a href="https://en.wikipedia.org/wiki/Singapore">Singapore</a></td></tr>
+							<tr><td class="infobox-label">Occupation</td><td class="infobox-data">Product marketing manager, web developer</td></tr>
+							<tr><td class="infobox-label">Employer</td><td class="infobox-data"><a href="https://www.assemblyai.com/">AssemblyAI</a></td></tr>
+							<tr><td class="infobox-label">Website</td><td class="infobox-data"><a href="/">heymart.dev</a></td></tr>
+						</table>
+
+						<!-- Lead section -->
+						<p>
+							<b>Martin Schweiger</b> (born 19 January 2001), known online as <b>Mart</b>, is a Brazilian-German
+							<a href="https://en.wikipedia.org/wiki/Product_marketing">product marketing manager</a> and
+							<a href="https://en.wikipedia.org/wiki/Web_developer">web developer</a> based in
+							<a href="https://en.wikipedia.org/wiki/Singapore">Singapore</a>. He is the product marketing manager
+							at <a href="https://www.assemblyai.com/">AssemblyAI</a>, a speech-to-text
+							<a href="https://en.wikipedia.org/wiki/Application_programming_interface">API</a> company.
+						</p>
+						<p>
+							Born in <a href="https://en.wikipedia.org/wiki/Munich">Munich</a>, Schweiger holds both Brazilian citizenship and
+							Singapore <a href="https://en.wikipedia.org/wiki/Permanent_residency_in_Singapore">permanent residency</a>.
+							He maintains a background in web development and describes himself as an aspiring artist.
+						</p>
+
+						<!-- Early life -->
+						<h2 id="early-life"><span class="mw-headline">Early life</span></h2>
+						<p>
+							Schweiger was born on 19 January 2001 in Munich, Germany. He was raised in a
+							<a href="https://en.wikipedia.org/wiki/Pentecostalism">Pentecostal Christian</a> family. He first began using
+							computers around the age of eight, initially through browser-based games on
+							<a href="https://en.wikipedia.org/wiki/Miniclip">Miniclip</a>.
+						</p>
+
+						<h3 id="internet-culture"><span class="mw-headline">Internet culture</span></h3>
+						<p>
+							Around the same period, Schweiger began watching content on <a href="https://en.wikipedia.org/wiki/YouTube">YouTube</a>,
+							where he was influenced by early gaming creators including
+							<a href="https://en.wikipedia.org/wiki/PewDiePie">PewDiePie</a>,
+							<a href="https://en.wikipedia.org/wiki/Nigahiga">nigahiga</a>, and
+							<a href="https://en.wikipedia.org/wiki/KSI">KSI</a>.<sup class="reference"><a href="#ref1">[1]</a></sup>
+							He spent considerable time playing
+							<a href="https://en.wikipedia.org/wiki/Minecraft">Minecraft</a>,
+							<a href="https://en.wikipedia.org/wiki/Team_Fortress_2">Team Fortress 2</a>, and the
+							<a href="https://en.wikipedia.org/wiki/FIFA_(video_game_series)">FIFA</a> series. He was not permitted to play
+							shooting games as a child.
+						</p>
+
+						<h3 id="programming"><span class="mw-headline">Introduction to programming</span></h3>
+						<p>
+							Schweiger's first exposure to programming came through
+							<a href="https://en.wikipedia.org/wiki/CodingBat">CodingBat</a>, where he completed
+							<a href="https://en.wikipedia.org/wiki/Python_(programming_language)">Python</a> exercises. At age 13,
+							he joined his school's computer club, which taught
+							<a href="https://en.wikipedia.org/wiki/Adobe_Flash">Flash</a> programming. Schweiger has described himself
+							as having struggled with Flash relative to his peers, and he left the club after a short
+							period.<sup class="reference"><a href="#ref2">[2]</a></sup>
+						</p>
+						<p>
+							He also attempted to learn <a href="https://en.wikipedia.org/wiki/C%2B%2B">C++</a> during this time,
+							which he has characterised as unsuccessful. Despite these setbacks, he retained an interest in building
+							<a href="https://en.wikipedia.org/wiki/HTML">HTML</a> websites, a skill he continued to develop independently.
+							Schweiger has referred to himself as a "failed programmer" in interviews.<sup class="reference"><a href="#ref3">[3]</a></sup>
+						</p>
+
+						<h3 id="video-editing"><span class="mw-headline">Video editing</span></h3>
+						<p>
+							Through the computer club, Schweiger also developed an interest in
+							<a href="https://en.wikipedia.org/wiki/Video_editing">video editing</a>. He produced videos for his parents,
+							friends, and school projects, and considered it the area of computing in which he was most
+							proficient during his adolescence.
+						</p>
+
+						<!-- Career -->
+						<h2 id="career"><span class="mw-headline">Career</span></h2>
+						<p>
+							Schweiger works as a product marketing manager at
+							<a href="https://www.assemblyai.com/">AssemblyAI</a>, a company that provides
+							<a href="https://en.wikipedia.org/wiki/Speech_recognition">speech recognition</a> and audio intelligence APIs.
+						</p>
+						<p>
+							Outside of his professional role, Schweiger continues to develop websites and describes himself as an
+							engineer and aspiring artist. He maintains an active presence on
+							<a href="https://github.com/m-ods">GitHub</a>.
+						</p>
+
+						<!-- Personal life -->
+						<h2 id="personal-life"><span class="mw-headline">Personal life</span></h2>
+						<p>
+							Schweiger resides in Singapore, where he holds permanent residency. He is a Brazilian citizen. He identifies
+							as spiritual and traditional Christian, having been raised in a Pentecostal household.
+						</p>
+						<p>
+							He has one sister. He is married and has one child.
+						</p>
+
+						<!-- References -->
+						<h2 id="references"><span class="mw-headline">References</span></h2>
+						<div class="reflist">
+							<ol>
+								<li id="ref1"><span class="reference-text">^ Schweiger has cited PewDiePie, nigahiga, and KSI among his earliest online influences.</span></li>
+								<li id="ref2"><span class="reference-text">^ Schweiger has spoken publicly about leaving the computer club after struggling with Flash programming.</span></li>
+								<li id="ref3"><span class="reference-text">^ Self-described in personal commentary; Schweiger has used the phrase "failed programmer" to describe his early relationship with coding.</span></li>
+							</ol>
+						</div>
+
+						<!-- External links -->
+						<h2 id="external-links"><span class="mw-headline">External links</span></h2>
+						<ul>
+							<li><a href="/">Official website</a></li>
+							<li><a href="https://github.com/m-ods">GitHub profile</a></li>
+							<li><a href="https://x.com/martschweiger">Schweiger</a> on <a href="https://en.wikipedia.org/wiki/Twitter">X (formerly Twitter)</a></li>
+							<li><a href="https://www.linkedin.com/in/martinschweiger/">Schweiger</a> on <a href="https://en.wikipedia.org/wiki/LinkedIn">LinkedIn</a></li>
+						</ul>
+
+						<!-- Categories -->
+						<div class="catlinks">
+							<b>Categories:</b>
+							<a href="#">2001 births</a> ·
+							<a href="#">Living people</a> ·
+							<a href="#">People from Munich</a> ·
+							<a href="#">Brazilian people of German descent</a> ·
+							<a href="#">Brazilian emigrants to Singapore</a> ·
+							<a href="#">Web developers</a> ·
+							<a href="#">Marketing people</a>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+	</body>
+</html>

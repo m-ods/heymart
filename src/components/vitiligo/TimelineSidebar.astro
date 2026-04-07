@@ -1,0 +1,135 @@
+---
+interface Props {
+  entryDates: string[];
+  startYear: number;
+  endYear: number;
+}
+
+const { entryDates, startYear, endYear } = Astro.props;
+const entryDateSet = new Set(entryDates);
+const monthNames = [
+  "January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December",
+];
+
+const years: number[] = [];
+for (let y = endYear; y >= startYear; y--) {
+  years.push(y);
+}
+---
+
+<nav class="timeline-sidebar" id="timeline-sidebar">
+  {years.map((year) => (
+    <div class="tl-year-group">
+      <div class="tl-year-label">{year}</div>
+      <div class="tl-months">
+        {monthNames.map((month, i) => {
+          const dateKey = `${year}-${String(i + 1).padStart(2, "0")}`;
+          const hasEntry = entryDateSet.has(dateKey);
+          return (
+            <a
+              class:list={["tl-month", { "has-entry": hasEntry }]}
+              data-date={dateKey}
+              href={hasEntry ? `#entry-${dateKey}` : undefined}
+            >
+              <span class="tl-dash" />
+              <span class="tl-month-name">{month}</span>
+            </a>
+          );
+        })}
+      </div>
+    </div>
+  ))}
+</nav>
+
+<style>
+  .timeline-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    pointer-events: none;
+    padding: 2rem 0.75rem 2rem 1.5rem;
+    flex-shrink: 0;
+    width: 210px;
+    scrollbar-width: none;
+    z-index: 10;
+  }
+
+  .timeline-sidebar > * {
+    pointer-events: auto;
+  }
+
+  .timeline-sidebar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tl-year-group {
+    margin-bottom: 0.125rem;
+  }
+
+  .tl-year-label {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.125rem;
+    padding-left: 2px;
+  }
+
+  .tl-months {
+    display: flex;
+    flex-direction: column;
+    padding-left: 1rem;
+  }
+
+  .tl-month {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.125rem 0;
+    text-decoration: none;
+    color: var(--text-faint);
+    font-size: 0.8rem;
+    cursor: default;
+    transition: color 0.15s;
+    user-select: none;
+  }
+
+  .tl-month.has-entry {
+    color: var(--text-muted);
+    cursor: pointer;
+  }
+
+  .tl-month.has-entry:hover {
+    color: var(--text);
+  }
+
+  .tl-month.active {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  .tl-dash {
+    display: block;
+    width: 14px;
+    height: 1.5px;
+    background: var(--border);
+    flex-shrink: 0;
+    transition: all 0.15s;
+  }
+
+  .tl-month.has-entry .tl-dash {
+    background: var(--text-muted);
+  }
+
+  .tl-month.active .tl-dash {
+    background: var(--text);
+    height: 3px;
+  }
+
+  .tl-month-name {
+    white-space: nowrap;
+  }
+</style>
