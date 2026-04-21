@@ -1,4 +1,35 @@
 ---
+const apps = [
+	{
+		title: "VITILIGO\nTRACKER",
+		label: "Vitiligo Tracker",
+		description: "Track your skin's journey",
+		href: "/vitiligo",
+		gradient: "linear-gradient(135deg, #5b48a8 0%, #7c6cc1 50%, #b3abd2 100%)",
+	},
+	{
+		title: "WIKI",
+		label: "Wiki",
+		description: "Personal knowledge base",
+		href: "/wiki",
+		gradient: "linear-gradient(135deg, #2b7d3e 0%, #4ea862 50%, #7dc48a 100%)",
+	},
+	{
+		title: "TIMEBOX",
+		label: "Timebox",
+		description: "Focus timer for deep work",
+		href: "/timebox",
+		gradient: "linear-gradient(135deg, #1a4c82 0%, #3a77b3 50%, #75a6d0 100%)",
+	},
+];
+
+const topLinks = [
+	{ label: "X (Twitter)", href: "https://x.com/martschweiger" },
+	{ label: "GitHub", href: "https://github.com/m-ods" },
+	{ label: "LinkedIn", href: "https://www.linkedin.com/in/martinschweiger/" },
+	{ label: "YouTube", href: "#" },
+	{ label: "Email", href: "mailto:martin@assemblyai.com" },
+];
 ---
 
 <!DOCTYPE html>
@@ -12,52 +43,57 @@
 		<title>HEYMART</title>
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+		<link href="https://fonts.googleapis.com/css2?family=Bungee&display=swap" rel="stylesheet" />
 	</head>
 	<body>
-		<main>
-			<h1 class="logo">HeyMart</h1>
-			<nav class="links">
-				<a href="/timebox">
-					<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-						<rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-						<line x1="16" y1="2" x2="16" y2="6"></line>
-						<line x1="8" y1="2" x2="8" y2="6"></line>
-						<line x1="3" y1="10" x2="21" y2="10"></line>
-					</svg>
-					Timebox
-				</a>
-				<a href="https://x.com/martschweiger" target="_blank" rel="noopener noreferrer">
-					<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-						<path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-					</svg>
-					X
-				</a>
-				<a href="https://github.com/m-ods" target="_blank" rel="noopener noreferrer">
-					<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-						<path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-					</svg>
-					GitHub
-				</a>
-				<a href="https://www.linkedin.com/in/martinschweiger/" target="_blank" rel="noopener noreferrer">
-					<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-						<path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-					</svg>
-					LinkedIn
-				</a>
-				<a href="/vitiligo">
-					<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-						<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-					</svg>
-					Vitiligo
-				</a>
-			</nav>
+		<main class="container">
+			<header class="logo-row">
+				<h1 class="logo">HeyMart</h1>
+			</header>
+
+			<div class="content">
+				<section class="apps-box" aria-labelledby="apps-heading">
+					<div class="box-header apps-header">
+						<svg width="22" height="22" viewBox="0 0 24 24" fill="#FFFFFF" aria-hidden="true">
+							<path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z" />
+						</svg>
+						<span id="apps-heading">Latest Apps</span>
+					</div>
+					<div class="apps-grid">
+						{apps.map((app) => (
+							<a class="app-card" href={app.href}>
+								<div class="app-tile" style={`background-image: ${app.gradient}`}>
+									<span class="app-title">{app.title}</span>
+								</div>
+								<div class="app-label">{app.label}</div>
+								<div class="app-description">{app.description}</div>
+							</a>
+						))}
+					</div>
+				</section>
+
+				<aside class="links-box" aria-labelledby="links-heading">
+					<div class="box-header links-header">
+						<span id="links-heading">Top Links</span>
+					</div>
+					<ol class="links-list">
+						{topLinks.map((link, i) => (
+							<li>
+								<span class="link-index">{i + 1}.</span>
+								<a href={link.href} target={link.href.startsWith("http") ? "_blank" : undefined} rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}>
+									{link.label}
+								</a>
+							</li>
+						))}
+					</ol>
+				</aside>
+			</div>
 		</main>
 
 		<style>
 			@font-face {
-				font-family: 'DistantGalaxy';
-				src: url('/fonts/DISTGRG_.ttf') format('truetype');
+				font-family: "DistantGalaxy";
+				src: url("/fonts/DISTGRG_.ttf") format("truetype");
 				font-weight: normal;
 				font-style: normal;
 				font-display: swap;
@@ -69,17 +105,10 @@
 				box-sizing: border-box;
 			}
 
-			:root {
-				--bg: #0a0a0a;
-				--text: #e0e0e0;
-				--accent: #ff6b35;
-				--link-hover: #ff8c61;
-			}
-
 			html {
-				font-family: 'JetBrains Mono', monospace;
-				background: var(--bg);
-				color: var(--text);
+				font-family: Verdana, system-ui, sans-serif;
+				background: #3d3d3d;
+				color: #1a1a1a;
 			}
 
 			body {
@@ -87,75 +116,200 @@
 				display: flex;
 				align-items: center;
 				justify-content: center;
-				padding: 2rem;
+				padding: 24px;
 			}
 
-			main {
-				text-align: center;
-				max-width: 100%;
-			}
-
-		.logo {
-			font-family: 'DistantGalaxy', sans-serif;
-			font-size: clamp(3rem, 15vw, 8rem);
-			background: linear-gradient(180deg, #ff8533 0%, #cc1a1a 100%);
-			-webkit-background-clip: text;
-			-webkit-text-fill-color: transparent;
-			background-clip: text;
-			letter-spacing: 0.05em;
-			margin-bottom: 3rem;
-			line-height: 1.2;
-		}
-
-			.links {
+			.container {
+				background: #ffffff;
+				border-radius: 8px;
+				width: 100%;
+				max-width: 1040px;
+				padding: 20px;
 				display: flex;
-				gap: 2rem;
-				justify-content: center;
-				flex-wrap: wrap;
+				flex-direction: column;
+				gap: 16px;
 			}
 
-			.links a {
+			.logo-row {
+				padding: 12px 20px 0;
+			}
+
+			.logo {
+				font-family: "DistantGalaxy", sans-serif;
+				font-size: clamp(56px, 11vw, 100px);
+				background: linear-gradient(180deg, #ff8533 22%, #e43a1e 50%, #b31515 100%);
+				-webkit-background-clip: text;
+				-webkit-text-fill-color: transparent;
+				background-clip: text;
+				letter-spacing: -0.01em;
+				line-height: 0.75;
+			}
+
+			.content {
+				display: flex;
+				gap: 16px;
+				padding: 0 0 4px;
+			}
+
+			.apps-box {
+				flex: 3 1 0;
+				min-width: 0;
+				background: #00acff;
+				border: 6px solid #d4f2ff;
+				border-radius: 8px;
+				overflow: hidden;
+				display: flex;
+				flex-direction: column;
+			}
+
+			.links-box {
+				flex: 1 1 0;
+				min-width: 0;
+				background: #fff8e1;
+				border: 6px solid #ffd48b;
+				border-radius: 8px;
+				overflow: hidden;
+				display: flex;
+				flex-direction: column;
+			}
+
+			.box-header {
+				padding: 8px 16px;
+				font-family: Verdana, system-ui, sans-serif;
+				font-weight: 700;
+				font-size: 18px;
+				line-height: 22px;
+				color: #ffffff;
 				display: flex;
 				align-items: center;
-				gap: 0.5rem;
-				color: var(--text);
+				gap: 8px;
+			}
+
+			.links-header {
+				background: linear-gradient(180deg, #ffb347 0%, #e88b1a 100%);
+			}
+
+			.apps-grid {
+				background: #ffffff;
+				padding: 10px;
+				display: flex;
+				gap: 8px;
+			}
+
+			.app-card {
+				flex: 1 1 0;
+				min-width: 0;
+				display: flex;
+				flex-direction: column;
+				gap: 6px;
 				text-decoration: none;
-				font-size: 1rem;
-				font-weight: 500;
-				padding: 0.75rem 1.25rem;
-				border: 1px solid rgba(224, 224, 224, 0.2);
-				border-radius: 8px;
-				transition: all 0.2s ease;
+				color: inherit;
 			}
 
-			.links a:hover {
-				color: var(--accent);
-				border-color: var(--accent);
+			.app-tile {
+				border: 2px solid #3b89c9;
+				border-radius: 6px;
+				height: 180px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				transition: transform 0.15s ease, box-shadow 0.15s ease;
+			}
+
+			.app-card:hover .app-tile {
 				transform: translateY(-2px);
-				box-shadow: 0 4px 12px rgba(255, 107, 53, 0.2);
+				box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
 			}
 
-			.links a svg {
+			.app-title {
+				font-family: "Bungee", system-ui, sans-serif;
+				font-size: 22px;
+				line-height: 28px;
+				color: #ffffff;
+				text-align: center;
+				white-space: pre-line;
+			}
+
+			.app-label {
+				font-weight: 700;
+				font-size: 13px;
+				line-height: 16px;
+				color: #1a1a1a;
+			}
+
+			.app-description {
+				font-size: 11px;
+				line-height: 14px;
+				color: #555555;
+			}
+
+			.links-list {
+				list-style: none;
+				padding: 12px 16px;
+				display: flex;
+				flex-direction: column;
+				gap: 6px;
+			}
+
+			.links-list li {
+				display: flex;
+				align-items: center;
+				gap: 8px;
+				font-weight: 700;
+				font-size: 13px;
+				line-height: 16px;
+			}
+
+			.link-index {
+				width: 20px;
 				flex-shrink: 0;
+				color: #333333;
 			}
 
-			@media (max-width: 640px) {
+			.links-list a {
+				color: #1155cc;
+				text-decoration: underline;
+				text-decoration-thickness: 1px;
+				text-underline-offset: 2px;
+			}
+
+			.links-list a:hover {
+				color: #0b3d91;
+			}
+
+			@media (max-width: 768px) {
 				body {
-					padding: 1.5rem;
+					padding: 12px;
+					align-items: flex-start;
 				}
 
-				.logo {
-					margin-bottom: 2rem;
+				.container {
+					padding: 12px;
 				}
 
-				.links {
-					gap: 1rem;
+				.logo-row {
+					padding: 8px 4px 0;
+				}
+
+				.content {
 					flex-direction: column;
-					align-items: stretch;
 				}
 
-				.links a {
-					justify-content: center;
+				.apps-box,
+				.links-box {
+					flex: 0 0 auto;
+				}
+
+				.links-box {
+					order: -1;
+				}
+
+				.apps-grid {
+					flex-direction: column;
+				}
+
+				.app-tile {
+					height: 140px;
 				}
 			}
 		</style>
