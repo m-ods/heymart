@@ -1,0 +1,129 @@
+---
+import SiteHeader from "../components/SiteHeader.astro";
+
+const { frontmatter } = Astro.props;
+const title = frontmatter.title;
+const description = frontmatter.description;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" href="/favicon.ico" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>{title} - HEYMART</title>
+		{description && <meta name="description" content={description} />}
+	</head>
+	<body>
+		<main class="page">
+			<SiteHeader />
+
+			<article class="post">
+				<header>
+					<h1>{title}</h1>
+				</header>
+
+				<div class="content">
+					<slot />
+				</div>
+			</article>
+		</main>
+
+		<style>
+			* {
+				box-sizing: border-box;
+			}
+
+			html {
+				font-family: Verdana, system-ui, sans-serif;
+				background: #3d3d3d;
+				color: #1a1a1a;
+			}
+
+			body {
+				margin: 0;
+				min-height: 100vh;
+				padding: 32px;
+			}
+
+			.page {
+				width: min(920px, 100%);
+				margin: 0 auto;
+				background: #ffffff;
+				border-radius: 8px;
+				padding: 30px;
+			}
+
+			a {
+				color: #1155cc;
+				text-decoration: underline;
+				text-decoration-thickness: 1px;
+				text-underline-offset: 2px;
+			}
+
+			a:hover {
+				color: #0b3d91;
+			}
+
+			.post {
+				border: 6px solid #d4f2ff;
+				border-radius: 8px;
+				overflow: hidden;
+			}
+
+			header {
+				background: linear-gradient(180deg, #2ab7ff 0%, #008bd6 100%);
+				color: #ffffff;
+				padding: 22px 28px;
+			}
+
+			h1 {
+				margin: 0;
+				font-size: clamp(28px, 5vw, 44px);
+				line-height: 1.15;
+			}
+
+			.content {
+				padding: 34px 38px 40px;
+				font-size: 18px;
+				line-height: 1.75;
+			}
+
+			.content :global(p) {
+				margin: 0 0 22px;
+			}
+
+			.content :global(ul) {
+				margin: 0 0 24px;
+				padding-left: 28px;
+			}
+
+			.content :global(h2) {
+				margin: 34px 0 14px;
+				font-size: 25px;
+				line-height: 1.25;
+			}
+
+			@media (max-width: 640px) {
+				body {
+					padding: 12px;
+				}
+
+				.page {
+					padding: 16px;
+				}
+
+				.content {
+					padding: 22px 18px 26px;
+					font-size: 16px;
+				}
+
+				header {
+					padding: 18px;
+				}
+			}
+		</style>
+	</body>
+</html>

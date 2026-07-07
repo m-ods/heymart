@@ -1,0 +1,77 @@
+---
+const navItems = [
+	{ label: "Home", href: "/" },
+	{ label: "Scribbles", href: "/blog" },
+	{ label: "Now", href: "/now" },
+];
+---
+
+<header class="site-header">
+	<a class="logo-link" href="/" aria-label="HeyMart home">HeyMart</a>
+	<nav aria-label="Primary navigation">
+		{navItems.map((item) => (
+			<a href={item.href}>{item.label}</a>
+		))}
+	</nav>
+</header>
+
+<style>
+	@font-face {
+		font-family: "DistantGalaxy";
+		src: url("/fonts/DISTGRG_.ttf") format("truetype");
+		font-weight: normal;
+		font-style: normal;
+		font-display: swap;
+	}
+
+	.site-header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 24px;
+		margin-bottom: 34px;
+	}
+
+	.logo-link {
+		font-family: "DistantGalaxy", sans-serif;
+		font-size: clamp(36px, 7vw, 62px);
+		line-height: 0.75;
+		background: linear-gradient(180deg, #ff8533 22%, #e43a1e 50%, #b31515 100%);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-clip: text;
+		text-decoration: none;
+	}
+
+	nav {
+		display: flex;
+		align-items: center;
+		gap: 14px;
+		font-size: 14px;
+		font-weight: 700;
+	}
+
+	nav a {
+		color: #1155cc;
+		text-decoration: underline;
+		text-decoration-thickness: 1px;
+		text-underline-offset: 2px;
+	}
+
+	nav a:hover {
+		color: #0b3d91;
+	}
+
+	@media (max-width: 640px) {
+		.site-header {
+			align-items: flex-start;
+			flex-direction: column;
+			gap: 16px;
+			margin-bottom: 24px;
+		}
+
+		nav {
+			flex-wrap: wrap;
+		}
+	}
+</style>

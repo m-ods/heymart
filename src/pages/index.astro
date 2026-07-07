@@ -1,25 +1,16 @@
 ---
-const apps = [
+const posts = [
 	{
-		title: "VITILIGO\nTRACKER",
-		label: "Vitiligo Tracker",
-		description: "Track your skin's journey",
-		href: "/vitiligo",
-		gradient: "linear-gradient(135deg, #5b48a8 0%, #7c6cc1 50%, #b3abd2 100%)",
+		title: "You should work out of whatever platform you like",
+		href: "/blog/platform-agnostic-work",
 	},
 	{
-		title: "WIKI",
-		label: "Wiki",
-		description: "Personal knowledge base",
-		href: "/wiki",
-		gradient: "linear-gradient(135deg, #2b7d3e 0%, #4ea862 50%, #7dc48a 100%)",
+		title: "Humans love bathing",
+		href: "/blog/humans-love-bathing",
 	},
 	{
-		title: "TIMEBOX",
-		label: "Timebox",
-		description: "Focus timer for deep work",
-		href: "/timebox",
-		gradient: "linear-gradient(135deg, #1a4c82 0%, #3a77b3 50%, #75a6d0 100%)",
+		title: "Confessions of a Hedonist",
+		href: "/blog/confessions-of-a-hedonist",
 	},
 ];
 
@@ -52,23 +43,34 @@ const topLinks = [
 			</header>
 
 			<div class="content">
-				<section class="apps-box" aria-labelledby="apps-heading">
-					<div class="box-header apps-header">
-						<svg width="22" height="22" viewBox="0 0 24 24" fill="#FFFFFF" aria-hidden="true">
-							<path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z" />
-						</svg>
-						<span id="apps-heading">Latest Apps</span>
+				<section class="about-box" aria-labelledby="about-heading">
+					<div class="box-header about-header">
+						<span id="about-heading">Hello! I'm Mart</span>
 					</div>
-					<div class="apps-grid">
-						{apps.map((app) => (
-							<a class="app-card" href={app.href}>
-								<div class="app-tile" style={`background-image: ${app.gradient}`}>
-									<span class="app-title">{app.title}</span>
-								</div>
-								<div class="app-label">{app.label}</div>
-								<div class="app-description">{app.description}</div>
-							</a>
-						))}
+					<div class="about-content">
+						<p>This is my corner of the internet where I plan to build a public record of my work.</p>
+						<p>First of all you should know that I'm a husband, father, and a hacker. I work at <a href="https://www.assemblyai.com/" target="_blank" rel="noopener noreferrer">AssemblyAI</a>.</p>
+						<p>You can see a rough breakdown of what I'm up to <a href="/now">here</a>.</p>
+
+						<h2>Some quick facts:</h2>
+						<ul>
+							<li>I taught myself to code by doing challenges on <a href="https://codingbat.com" target="_blank" rel="noopener noreferrer">CodingBat</a>.</li>
+							<li>I live in sunny Singapore 🇸🇬 with my wife and daughter.</li>
+							<li>I really like computers, jets, coffee, music, and games.</li>
+						</ul>
+
+						<p>Feel free to explore my site and get in touch! I love making friends with new people :)</p>
+
+						<div class="writing-block">
+							<h2>Scribbles</h2>
+							<ul class="post-list">
+								{posts.map((post) => (
+									<li>
+										<a href={post.href}>{post.title}</a>
+									</li>
+								))}
+							</ul>
+						</div>
 					</div>
 				</section>
 
@@ -131,7 +133,7 @@ const topLinks = [
 			}
 
 			.logo-row {
-				padding: 12px 20px 0;
+				padding: 18px 24px 8px;
 			}
 
 			.logo {
@@ -147,15 +149,16 @@ const topLinks = [
 
 			.content {
 				display: flex;
-				gap: 16px;
-				padding: 0 0 4px;
+				align-items: flex-start;
+				gap: 20px;
+				padding: 0 4px 4px;
 			}
 
-			.apps-box {
+			.about-box {
 				flex: 3 1 0;
 				min-width: 0;
 				background: #00acff;
-				border: 6px solid #d4f2ff;
+				border: 8px solid #d4f2ff;
 				border-radius: 8px;
 				overflow: hidden;
 				display: flex;
@@ -189,58 +192,73 @@ const topLinks = [
 				background: linear-gradient(180deg, #ffb347 0%, #e88b1a 100%);
 			}
 
-			.apps-grid {
-				background: #ffffff;
-				padding: 10px;
-				display: flex;
-				gap: 8px;
+			.about-header {
+				background: linear-gradient(180deg, #2ab7ff 0%, #008bd6 100%);
+				padding-block: 10px;
 			}
 
-			.app-card {
-				flex: 1 1 0;
-				min-width: 0;
+			.about-content {
+				background: #ffffff;
+				margin: 0;
+				padding: 24px 26px 28px;
+				display: flex;
+				flex-direction: column;
+				gap: 16px;
+				font-size: 17px;
+				line-height: 1.6;
+			}
+
+			.about-content h2 {
+				font-size: 24px;
+				line-height: 1.2;
+				margin: 8px 0 0;
+			}
+
+			.about-content ul {
+				padding-left: 24px;
 				display: flex;
 				flex-direction: column;
 				gap: 6px;
-				text-decoration: none;
-				color: inherit;
 			}
 
-			.app-tile {
-				border: 2px solid #3b89c9;
-				border-radius: 6px;
-				height: 180px;
+			.about-content a,
+			.post-list a {
+				color: #1155cc;
+				text-decoration: underline;
+				text-decoration-thickness: 1px;
+				text-underline-offset: 2px;
+			}
+
+			.about-content a:hover,
+			.post-list a:hover {
+				color: #0b3d91;
+			}
+
+			.writing-block {
+				border-top: 1px solid #d9e8f4;
+				margin-top: 8px;
+				padding-top: 20px;
 				display: flex;
-				align-items: center;
-				justify-content: center;
-				transition: transform 0.15s ease, box-shadow 0.15s ease;
+				flex-direction: column;
+				gap: 12px;
 			}
 
-			.app-card:hover .app-tile {
-				transform: translateY(-2px);
-				box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
+			.post-list {
+				list-style: none;
+				padding-left: 0;
+				display: flex;
+				flex-direction: column;
+				gap: 14px;
 			}
 
-			.app-title {
-				font-family: "Bungee", system-ui, sans-serif;
-				font-size: 22px;
-				line-height: 28px;
-				color: #ffffff;
-				text-align: center;
-				white-space: pre-line;
+			.post-list li {
+				display: flex;
+				flex-direction: column;
+				gap: 4px;
 			}
 
-			.app-label {
+			.post-list a {
 				font-weight: 700;
-				font-size: 13px;
-				line-height: 16px;
-				color: #1a1a1a;
-			}
-
-			.app-description {
-				font-size: 11px;
-				line-height: 14px;
-				color: #555555;
 			}
 
 			.links-list {
@@ -288,28 +306,25 @@ const topLinks = [
 				}
 
 				.logo-row {
-					padding: 8px 4px 0;
+					padding: 10px 6px 4px;
 				}
 
 				.content {
 					flex-direction: column;
 				}
 
-				.apps-box,
+				.about-box,
 				.links-box {
 					flex: 0 0 auto;
 				}
 
-				.links-box {
-					order: -1;
+				.about-content {
+					padding: 18px;
+					font-size: 15px;
 				}
 
-				.apps-grid {
-					flex-direction: column;
-				}
-
-				.app-tile {
-					height: 140px;
+				.about-content h2 {
+					font-size: 20px;
 				}
 			}
 		</style>
