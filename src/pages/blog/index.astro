@@ -57,15 +57,16 @@ const posts = [
 			body {
 				margin: 0;
 				min-height: 100vh;
-				padding: 32px;
+				padding: 24px;
 			}
 
 			.page {
-				width: min(920px, 100%);
+				width: 100%;
+				max-width: 1040px;
 				margin: 0 auto;
 				background: #ffffff;
 				border-radius: 8px;
-				padding: 30px;
+				padding: 20px;
 			}
 
 			.post-list a {
@@ -109,13 +110,13 @@ const posts = [
 				gap: 6px;
 			}
 
-			@media (max-width: 640px) {
+			@media (max-width: 768px) {
 				body {
 					padding: 12px;
 				}
 
 				.page {
-					padding: 16px;
+					padding: 12px;
 				}
 
 				.box-header,
