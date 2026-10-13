@@ -1,0 +1,627 @@
+---
+import SiteHeader from "../components/SiteHeader.astro";
+
+const loves = [
+	{
+		title: "Food & Drink",
+		items: [
+			"Coffee",
+			"Cata Coffee at East Coast",
+			"Pizza",
+			"Sourdough bread",
+			"Corn thins",
+			"Chocolate cake",
+			"Ice cream",
+			"Sparkling water",
+		],
+	},
+	{
+		title: "Machines & Making",
+		items: [
+			"My Cafelat machine",
+			"Craft: clean code",
+			"Assembling IKEA furniture",
+			"Design",
+			"Art",
+			"Animations",
+			"Video",
+		],
+	},
+	{
+		title: "Culture",
+		items: [
+			"Music",
+			"YouTube",
+			"Comedy",
+			"Roman Empire",
+			"Business",
+		],
+	},
+	{
+		title: "Treasures & Materials",
+		items: [
+			"Silver",
+			"Gold",
+			"Diamond",
+			"Cotton",
+			"Solid wood",
+			"Metals — stainless steel",
+		],
+	},
+	{
+		title: "Body & Place",
+		items: [
+			"Strength training",
+			"Pilates",
+			"Sauna",
+			"Beach",
+			"Travelling",
+			{ label: "Jets", shout: true },
+			"Cars",
+		],
+	},
+	{
+		title: "Good Experiences",
+		items: [
+			"Petting zoos",
+			"Fine dining",
+			"Obscure travel destinations",
+			"Last minute plans",
+			"Quiet fun with people I love",
+		],
+	},
+	{
+		title: "Good Products",
+		items: [
+			"Lazyboy chair",
+			"Pianos",
+			"New Balance shoes",
+		],
+	},
+	{
+		title: "People & Faith",
+		items: [
+			"Family",
+			"God",
+		],
+	},
+];
+
+const hates = ["Email"];
+
+type LoveItem = string | { label: string; shout?: boolean };
+---
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" href="/favicon.ico" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="Everything Mart loves — Stardew Valley gift preference edition." />
+		<title>Loves - HEYMART</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600;700&family=VT323&display=swap" rel="stylesheet" />
+	</head>
+	<body>
+		<main class="page">
+			<SiteHeader />
+
+			<section class="game-shell" aria-labelledby="loves-heading">
+				<div class="game-frame">
+					<div class="hud">
+						<div class="hud-left">
+							<span class="hud-label">Gift Preferences</span>
+							<span class="hud-dot" aria-hidden="true"></span>
+							<span class="hud-season">Spring · Year ∞</span>
+						</div>
+						<div class="energy" aria-hidden="true">
+							<span class="energy-bar"></span>
+							<span class="energy-text">Energy</span>
+						</div>
+					</div>
+
+					<header class="hero">
+						<div class="hero-mark" aria-hidden="true">
+							<img src="/images/stardew-heart.png" alt="" width="48" height="48" class="hero-heart" />
+						</div>
+						<div class="hero-copy">
+							<p class="eyebrow">Mart's Social Tab</p>
+							<h1 id="loves-heading">Loves</h1>
+							<p class="tagline">
+								Favorite gifts only. Give these and friendship goes up fast.
+							</p>
+						</div>
+					</header>
+
+					<div class="boards">
+						{loves.map((group) => (
+							<section class="board" aria-labelledby={`group-${group.title}`}>
+								<div class="board-header">
+									<img src="/images/stardew-heart.png" alt="" width="18" height="18" class="board-heart" />
+									<h2 id={`group-${group.title}`}>{group.title}</h2>
+								</div>
+								<ul class="gift-list">
+									{group.items.map((item: LoveItem) => {
+										const label = typeof item === "string" ? item : item.label;
+										const shout = typeof item === "object" && item.shout;
+										return (
+											<li class:list={[{ shout }]}>
+												<img src="/images/stardew-heart.png" alt="" width="16" height="16" class="item-heart" />
+												<span>{label}</span>
+												{shout && <em class="shout-tag">LOVE JETS</em>}
+											</li>
+										);
+									})}
+								</ul>
+							</section>
+						))}
+
+						<section class="board hate-board" aria-labelledby="hates-heading">
+							<div class="board-header">
+								<span class="hate-icon" aria-hidden="true"></span>
+								<h2 id="hates-heading">Hates</h2>
+							</div>
+							<ul class="gift-list">
+								{hates.map((item) => (
+									<li class="hate-item">
+										<span class="hate-icon small" aria-hidden="true"></span>
+										<span>{item}</span>
+									</li>
+								))}
+							</ul>
+							<p class="hate-note">Friendship −∞. Do not gift.</p>
+						</section>
+					</div>
+
+					<footer class="dialogue">
+						<p>
+							<span class="speaker">Mart</span>
+							“If you’re bringing gifts, bring hearts. If you’re bringing email… maybe don’t.”
+						</p>
+					</footer>
+				</div>
+			</section>
+		</main>
+
+		<style>
+			* {
+				box-sizing: border-box;
+			}
+
+			html {
+				font-family: Verdana, system-ui, sans-serif;
+				background: #3d3d3d;
+				color: #1a1a1a;
+			}
+
+			body {
+				margin: 0;
+				min-height: 100vh;
+				padding: 24px;
+			}
+
+			.page {
+				width: 100%;
+				max-width: 1040px;
+				margin: 0 auto;
+				background: #ffffff;
+				border-radius: 8px;
+				padding: 20px;
+			}
+
+			.game-shell {
+				border: 8px solid #7ec850;
+				border-radius: 10px;
+				overflow: hidden;
+				background:
+					radial-gradient(circle at 12% 18%, rgba(255, 236, 150, 0.35), transparent 28%),
+					radial-gradient(circle at 88% 8%, rgba(126, 200, 80, 0.28), transparent 24%),
+					linear-gradient(180deg, #6ec4ff 0%, #87ceeb 28%, #b8e986 62%, #7ec850 100%);
+				position: relative;
+			}
+
+			.game-shell::before {
+				content: "";
+				position: absolute;
+				inset: 0;
+				pointer-events: none;
+				opacity: 0.18;
+				background-image:
+					linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+					linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+				background-size: 8px 8px;
+				animation: drift 18s linear infinite;
+			}
+
+			.game-frame {
+				position: relative;
+				z-index: 1;
+				margin: 14px;
+				padding: 18px;
+				border: 4px solid #5a3a1a;
+				border-radius: 6px;
+				background:
+					linear-gradient(180deg, rgba(255, 248, 220, 0.96), rgba(245, 230, 190, 0.96)),
+					repeating-linear-gradient(
+						90deg,
+						rgba(139, 90, 43, 0.04) 0 2px,
+						transparent 2px 10px
+					);
+				box-shadow:
+					inset 0 0 0 3px #c9a46a,
+					0 8px 0 rgba(60, 40, 20, 0.18);
+			}
+
+			.hud {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				gap: 12px;
+				margin-bottom: 18px;
+				padding: 8px 12px;
+				background: linear-gradient(180deg, #3d2914, #2a1b0d);
+				border: 2px solid #8b5a2b;
+				color: #f5e6c8;
+				font-family: "Pixelify Sans", "VT323", monospace;
+				font-size: 14px;
+				letter-spacing: 0.04em;
+			}
+
+			.hud-left {
+				display: flex;
+				align-items: center;
+				gap: 10px;
+				flex-wrap: wrap;
+			}
+
+			.hud-dot {
+				width: 8px;
+				height: 8px;
+				background: #7ec850;
+				box-shadow: 0 0 0 2px #2f5d1d;
+				animation: blink 1.6s steps(2, end) infinite;
+			}
+
+			.energy {
+				display: flex;
+				align-items: center;
+				gap: 8px;
+			}
+
+			.energy-bar {
+				display: block;
+				width: 84px;
+				height: 12px;
+				background: linear-gradient(90deg, #7ec850 0 72%, #3d2914 72% 100%);
+				border: 2px solid #f5e6c8;
+			}
+
+			.energy-text {
+				opacity: 0.85;
+			}
+
+			.hero {
+				display: flex;
+				align-items: center;
+				gap: 18px;
+				margin-bottom: 22px;
+				padding: 8px 4px 18px;
+				border-bottom: 3px solid #c9a46a;
+			}
+
+			.hero-mark {
+				flex-shrink: 0;
+				width: 72px;
+				height: 72px;
+				display: grid;
+				place-items: center;
+				background: #fff8dc;
+				border: 3px solid #5a3a1a;
+				box-shadow: inset 0 0 0 3px #c9a46a;
+			}
+
+			.hero-heart {
+				image-rendering: pixelated;
+				width: 48px;
+				height: 48px;
+				animation: heartbeat 1.4s ease-in-out infinite;
+			}
+
+			.eyebrow {
+				margin: 0 0 4px;
+				font-family: "Pixelify Sans", "VT323", monospace;
+				font-size: 15px;
+				letter-spacing: 0.08em;
+				text-transform: uppercase;
+				color: #7a4e1d;
+			}
+
+			.hero h1 {
+				margin: 0;
+				font-family: "Pixelify Sans", "VT323", monospace;
+				font-size: clamp(42px, 9vw, 72px);
+				line-height: 0.95;
+				color: #c62828;
+				text-shadow:
+					2px 0 #fff8dc,
+					-2px 0 #fff8dc,
+					0 2px #fff8dc,
+					0 -2px #fff8dc,
+					3px 3px 0 #5a3a1a;
+			}
+
+			.tagline {
+				margin: 10px 0 0;
+				max-width: 36ch;
+				font-size: 15px;
+				line-height: 1.45;
+				color: #3d2914;
+			}
+
+			.boards {
+				display: grid;
+				grid-template-columns: repeat(2, minmax(0, 1fr));
+				gap: 14px;
+			}
+
+			.board {
+				background: rgba(255, 252, 240, 0.88);
+				border: 3px solid #8b5a2b;
+				box-shadow: inset 0 0 0 2px #e8d5a8;
+				padding: 12px 12px 14px;
+				animation: rise-in 0.55s ease both;
+			}
+
+			.board:nth-child(1) { animation-delay: 0.05s; }
+			.board:nth-child(2) { animation-delay: 0.1s; }
+			.board:nth-child(3) { animation-delay: 0.15s; }
+			.board:nth-child(4) { animation-delay: 0.2s; }
+			.board:nth-child(5) { animation-delay: 0.25s; }
+			.board:nth-child(6) { animation-delay: 0.3s; }
+			.board:nth-child(7) { animation-delay: 0.35s; }
+			.board:nth-child(8) { animation-delay: 0.4s; }
+			.board:nth-child(9) { animation-delay: 0.45s; }
+
+			.board-header {
+				display: flex;
+				align-items: center;
+				gap: 8px;
+				margin-bottom: 10px;
+				padding-bottom: 8px;
+				border-bottom: 2px dashed #c9a46a;
+			}
+
+			.board-header h2 {
+				margin: 0;
+				font-family: "Pixelify Sans", "VT323", monospace;
+				font-size: 20px;
+				line-height: 1.1;
+				color: #3d2914;
+			}
+
+			.board-heart,
+			.item-heart {
+				image-rendering: pixelated;
+				flex-shrink: 0;
+			}
+
+			.gift-list {
+				list-style: none;
+				margin: 0;
+				padding: 0;
+				display: flex;
+				flex-direction: column;
+				gap: 7px;
+			}
+
+			.gift-list li {
+				display: flex;
+				align-items: center;
+				gap: 8px;
+				padding: 6px 8px;
+				font-size: 14px;
+				line-height: 1.35;
+				color: #2a1b0d;
+				background: transparent;
+				transition: background 0.15s ease, transform 0.15s ease;
+			}
+
+			.gift-list li:hover {
+				background: rgba(126, 200, 80, 0.18);
+				transform: translateX(3px);
+			}
+
+			.gift-list li.shout {
+				background: rgba(230, 57, 70, 0.1);
+				border: 2px solid rgba(198, 40, 40, 0.35);
+				font-weight: 700;
+			}
+
+			.shout-tag {
+				margin-left: auto;
+				font-family: "Pixelify Sans", "VT323", monospace;
+				font-style: normal;
+				font-size: 12px;
+				letter-spacing: 0.04em;
+				color: #c62828;
+				animation: pulse-text 1.2s ease-in-out infinite;
+			}
+
+			.hate-board {
+				background: linear-gradient(180deg, #2b2b2b, #1a1a1a);
+				border-color: #555;
+				box-shadow: inset 0 0 0 2px #3d3d3d;
+				color: #f0f0f0;
+				grid-column: 1 / -1;
+			}
+
+			.hate-board .board-header {
+				border-bottom-color: #666;
+			}
+
+			.hate-board .board-header h2 {
+				color: #f5f5f5;
+			}
+
+			.hate-item {
+				color: #f0f0f0 !important;
+			}
+
+			.hate-item:hover {
+				background: rgba(230, 57, 70, 0.18) !important;
+			}
+
+			.hate-icon {
+				display: inline-grid;
+				place-items: center;
+				width: 18px;
+				height: 18px;
+				flex-shrink: 0;
+				background: #111;
+				border: 2px solid #eee;
+				position: relative;
+			}
+
+			.hate-icon::before,
+			.hate-icon::after {
+				content: "";
+				position: absolute;
+				width: 10px;
+				height: 2px;
+				background: #e63946;
+			}
+
+			.hate-icon::before {
+				transform: rotate(45deg);
+			}
+
+			.hate-icon::after {
+				transform: rotate(-45deg);
+			}
+
+			.hate-icon.small {
+				width: 16px;
+				height: 16px;
+			}
+
+			.hate-note {
+				margin: 12px 0 0;
+				font-family: "Pixelify Sans", "VT323", monospace;
+				font-size: 13px;
+				color: #bbb;
+			}
+
+			.dialogue {
+				margin-top: 16px;
+				padding: 14px 16px;
+				background: #fff8dc;
+				border: 3px solid #5a3a1a;
+				box-shadow: inset 0 0 0 2px #c9a46a;
+			}
+
+			.dialogue p {
+				margin: 0;
+				font-size: 15px;
+				line-height: 1.5;
+				color: #2a1b0d;
+			}
+
+			.speaker {
+				display: inline-block;
+				margin-right: 8px;
+				padding: 2px 8px;
+				font-family: "Pixelify Sans", "VT323", monospace;
+				font-size: 13px;
+				background: #7ec850;
+				border: 2px solid #3d2914;
+				color: #1a1a1a;
+			}
+
+			@keyframes heartbeat {
+				0%, 100% { transform: scale(1); }
+				35% { transform: scale(1.12); }
+				55% { transform: scale(0.96); }
+			}
+
+			@keyframes blink {
+				50% { opacity: 0.25; }
+			}
+
+			@keyframes drift {
+				from { background-position: 0 0, 0 0; }
+				to { background-position: 64px 32px, 64px 32px; }
+			}
+
+			@keyframes rise-in {
+				from {
+					opacity: 0;
+					transform: translateY(10px);
+				}
+				to {
+					opacity: 1;
+					transform: translateY(0);
+				}
+			}
+
+			@keyframes pulse-text {
+				0%, 100% { opacity: 1; }
+				50% { opacity: 0.55; }
+			}
+
+			@media (max-width: 768px) {
+				body {
+					padding: 12px;
+				}
+
+				.page {
+					padding: 12px;
+				}
+
+				.game-frame {
+					margin: 8px;
+					padding: 12px;
+				}
+
+				.hero {
+					align-items: flex-start;
+					flex-direction: column;
+					gap: 12px;
+				}
+
+				.boards {
+					grid-template-columns: 1fr;
+				}
+
+				.hud {
+					flex-direction: column;
+					align-items: flex-start;
+				}
+
+				.shout-tag {
+					margin-left: 0;
+				}
+
+				.gift-list li.shout {
+					flex-wrap: wrap;
+				}
+			}
+
+			@media (prefers-reduced-motion: reduce) {
+				.hero-heart,
+				.hud-dot,
+				.shout-tag,
+				.game-shell::before,
+				.board {
+					animation: none;
+				}
+
+				.gift-list li:hover {
+					transform: none;
+				}
+			}
+		</style>
+	</body>
+</html>
