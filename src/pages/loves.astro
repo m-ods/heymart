@@ -1,93 +1,105 @@
 ---
 import SiteHeader from "../components/SiteHeader.astro";
 
-const loves = [
+type LoveItem = {
+	label: string;
+	href: string;
+	shout?: boolean;
+};
+
+const loves: { title: string; items: LoveItem[] }[] = [
 	{
 		title: "Food & Drink",
 		items: [
-			"Coffee",
-			"Cata Coffee at East Coast",
-			"Pizza",
-			"Sourdough bread",
-			"Corn thins",
-			"Chocolate cake",
-			"Ice cream",
-			"Sparkling water",
+			{ label: "Coffee", href: "https://en.wikipedia.org/wiki/Coffee" },
+			{ label: "Cata Coffee at East Coast", href: "https://catacoffee.com/" },
+			{ label: "Pizza", href: "https://en.wikipedia.org/wiki/Pizza" },
+			{ label: "Sourdough bread", href: "https://en.wikipedia.org/wiki/Sourdough" },
+			{ label: "Corn thins", href: "https://www.cornthins.com/" },
+			{ label: "Chocolate cake", href: "https://en.wikipedia.org/wiki/Chocolate_cake" },
+			{ label: "Ice cream", href: "https://en.wikipedia.org/wiki/Ice_cream" },
+			{ label: "Watermelon", href: "https://en.wikipedia.org/wiki/Watermelon" },
+			{
+				label: "Sparkling water",
+				href: "https://aarke.com/en-row/collections/carbonators/products/carbonator-pro-matte-black",
+			},
 		],
 	},
 	{
 		title: "Machines & Making",
 		items: [
-			"My Cafelat machine",
-			"Craft: clean code",
-			"Assembling IKEA furniture",
-			"Design",
-			"Art",
-			"Animations",
-			"Video",
+			{ label: "My Cafelat machine", href: "https://www.cafelat.com/robot.html" },
+			{ label: "Craft: clean code", href: "https://en.wikipedia.org/wiki/Clean_Code" },
+			{ label: "Assembling IKEA furniture", href: "https://www.ikea.com/" },
+			{ label: "Design", href: "https://en.wikipedia.org/wiki/Design" },
+			{ label: "Art", href: "https://en.wikipedia.org/wiki/Art" },
+			{ label: "Animations", href: "https://en.wikipedia.org/wiki/Animation" },
+			{ label: "Video", href: "https://en.wikipedia.org/wiki/Video" },
 		],
 	},
 	{
 		title: "Culture",
 		items: [
-			"Music",
-			"YouTube",
-			"Comedy",
-			"Roman Empire",
-			"Business",
+			{ label: "Music", href: "https://en.wikipedia.org/wiki/Music" },
+			{ label: "YouTube", href: "https://www.youtube.com/" },
+			{ label: "Comedy", href: "https://en.wikipedia.org/wiki/Comedy" },
+			{ label: "History", href: "https://en.wikipedia.org/wiki/History" },
+			{ label: "Marketing", href: "https://en.wikipedia.org/wiki/Marketing" },
 		],
 	},
 	{
-		title: "Treasures & Materials",
+		title: "Materials",
 		items: [
-			"Silver",
-			"Gold",
-			"Diamond",
-			"Cotton",
-			"Solid wood",
-			"Metals — stainless steel",
+			{ label: "Stainless steel", href: "https://en.wikipedia.org/wiki/Stainless_steel" },
+			{ label: "Silver", href: "https://en.wikipedia.org/wiki/Silver" },
+			{ label: "Solid wood", href: "https://en.wikipedia.org/wiki/Wood" },
+			{ label: "Gold", href: "https://en.wikipedia.org/wiki/Gold" },
+			{ label: "Diamond", href: "https://en.wikipedia.org/wiki/Diamond" },
+			{ label: "Cotton", href: "https://en.wikipedia.org/wiki/Cotton" },
 		],
 	},
 	{
 		title: "Body & Place",
 		items: [
-			"Strength training",
-			"Pilates",
-			"Sauna",
-			"Beach",
-			"Travelling",
-			{ label: "Jets", shout: true },
-			"Cars",
+			{ label: "Strength training", href: "https://en.wikipedia.org/wiki/Strength_training" },
+			{ label: "Pilates", href: "https://en.wikipedia.org/wiki/Pilates" },
+			{ label: "Sauna", href: "https://en.wikipedia.org/wiki/Sauna" },
+			{ label: "Beach", href: "https://en.wikipedia.org/wiki/Beach" },
+			{ label: "Travelling", href: "https://en.wikipedia.org/wiki/Travel" },
+			{ label: "Jets", href: "https://en.wikipedia.org/wiki/Jet_aircraft", shout: true },
+			{ label: "Cars", href: "https://en.wikipedia.org/wiki/Car" },
 		],
 	},
 	{
 		title: "Good Experiences",
 		items: [
-			"Petting zoos",
-			"Fine dining",
-			"Obscure travel destinations",
-			"Last minute plans",
-			"Quiet fun with people I love",
+			{ label: "Petting zoos", href: "https://en.wikipedia.org/wiki/Petting_zoo" },
+			{ label: "Fine dining", href: "https://naeum.sg/" },
+			{ label: "Obscure travel destinations", href: "https://www.atlasobscura.com/" },
+			{ label: "Last minute plans", href: "https://www.kayak.com/" },
+			{
+				label: "Quiet fun with people I love",
+				href: "https://en.wikipedia.org/wiki/Quality_time",
+			},
 		],
 	},
 	{
 		title: "Good Products",
 		items: [
-			"Lazyboy chair",
-			"Pianos",
-			"New Balance shoes",
+			{ label: "La-Z-Boy chair", href: "https://www.la-z-boy.com/" },
+			{ label: "Pianos", href: "https://www.steinway.com/" },
+			{ label: "New Balance shoes", href: "https://www.newbalance.com/" },
 		],
 	},
 	{
 		title: "People & Faith",
 		items: [
-			"Family",
-			"God",
+			{ label: "Family", href: "https://en.wikipedia.org/wiki/Family" },
+			{ label: "Kids", href: "https://en.wikipedia.org/wiki/Child" },
+			{ label: "God", href: "https://en.wikipedia.org/wiki/God" },
 		],
 	},
 ];
-
-type LoveItem = string | { label: string; shout?: boolean };
 ---
 
 <!DOCTYPE html>
@@ -123,16 +135,14 @@ type LoveItem = string | { label: string; shout?: boolean };
 									<h2 id={`group-${group.title}`}>{group.title}</h2>
 								</div>
 								<ul class="gift-list">
-									{group.items.map((item: LoveItem) => {
-										const label = typeof item === "string" ? item : item.label;
-										const shout = typeof item === "object" && item.shout;
-										return (
-											<li class:list={[{ shout }]}>
-												<span>{label}</span>
-												{shout && <em class="shout-tag">LOVE JETS</em>}
-											</li>
-										);
-									})}
+									{group.items.map((item) => (
+										<li class:list={[{ shout: item.shout }]}>
+											<a href={item.href} target="_blank" rel="noopener noreferrer">
+												{item.label}
+											</a>
+											{item.shout && <em class="shout-tag">LOVE JETS</em>}
+										</li>
+									))}
 								</ul>
 							</section>
 						))}
@@ -309,6 +319,17 @@ type LoveItem = string | { label: string; shout?: boolean };
 				transition: background 0.15s ease, transform 0.15s ease;
 			}
 
+			.gift-list a {
+				color: #1155cc;
+				text-decoration: underline;
+				text-decoration-thickness: 1px;
+				text-underline-offset: 2px;
+			}
+
+			.gift-list a:hover {
+				color: #0b3d91;
+			}
+
 			.gift-list li:hover {
 				background: rgba(126, 200, 80, 0.18);
 				transform: translateX(3px);
@@ -318,6 +339,15 @@ type LoveItem = string | { label: string; shout?: boolean };
 				background: rgba(230, 57, 70, 0.1);
 				border: 2px solid rgba(198, 40, 40, 0.35);
 				font-weight: 700;
+			}
+
+			.gift-list li.shout a {
+				color: #c62828;
+				font-weight: 700;
+			}
+
+			.gift-list li.shout a:hover {
+				color: #8e1b1b;
 			}
 
 			.shout-tag {
