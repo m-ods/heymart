@@ -3,7 +3,7 @@ import SiteHeader from "../components/SiteHeader.astro";
 
 type LoveItem = {
 	label: string;
-	href: string;
+	href?: string;
 	shout?: boolean;
 };
 
@@ -11,14 +11,14 @@ const loves: { title: string; items: LoveItem[] }[] = [
 	{
 		title: "Food & Drink",
 		items: [
-			{ label: "Coffee", href: "https://en.wikipedia.org/wiki/Coffee" },
+			{ label: "Coffee" },
 			{ label: "Cata Coffee at East Coast", href: "https://catacoffee.com/" },
-			{ label: "Pizza", href: "https://en.wikipedia.org/wiki/Pizza" },
-			{ label: "Sourdough bread", href: "https://en.wikipedia.org/wiki/Sourdough" },
+			{ label: "Pizza" },
+			{ label: "Sourdough bread" },
 			{ label: "Corn thins", href: "https://www.cornthins.com/" },
-			{ label: "Chocolate cake", href: "https://en.wikipedia.org/wiki/Chocolate_cake" },
-			{ label: "Ice cream", href: "https://en.wikipedia.org/wiki/Ice_cream" },
-			{ label: "Watermelon", href: "https://en.wikipedia.org/wiki/Watermelon" },
+			{ label: "Chocolate cake" },
+			{ label: "Ice cream" },
+			{ label: "Watermelon" },
 			{
 				label: "Sparkling water",
 				href: "https://aarke.com/en-row/collections/carbonators/products/carbonator-pro-matte-black",
@@ -29,58 +29,55 @@ const loves: { title: string; items: LoveItem[] }[] = [
 		title: "Machines & Making",
 		items: [
 			{ label: "My Cafelat machine", href: "https://www.cafelat.com/robot.html" },
-			{ label: "Craft: clean code", href: "https://en.wikipedia.org/wiki/Clean_Code" },
+			{ label: "Craft: clean code" },
 			{ label: "Assembling IKEA furniture", href: "https://www.ikea.com/" },
-			{ label: "Design", href: "https://en.wikipedia.org/wiki/Design" },
-			{ label: "Art", href: "https://en.wikipedia.org/wiki/Art" },
-			{ label: "Animations", href: "https://en.wikipedia.org/wiki/Animation" },
-			{ label: "Video", href: "https://en.wikipedia.org/wiki/Video" },
+			{ label: "Design" },
+			{ label: "Art" },
+			{ label: "Animations" },
+			{ label: "Video" },
 		],
 	},
 	{
 		title: "Culture",
 		items: [
-			{ label: "Music", href: "https://en.wikipedia.org/wiki/Music" },
+			{ label: "Music" },
 			{ label: "YouTube", href: "https://www.youtube.com/" },
-			{ label: "Comedy", href: "https://en.wikipedia.org/wiki/Comedy" },
-			{ label: "History", href: "https://en.wikipedia.org/wiki/History" },
-			{ label: "Marketing", href: "https://en.wikipedia.org/wiki/Marketing" },
+			{ label: "Comedy" },
+			{ label: "History" },
+			{ label: "Marketing" },
 		],
 	},
 	{
 		title: "Materials",
 		items: [
-			{ label: "Stainless steel", href: "https://en.wikipedia.org/wiki/Stainless_steel" },
-			{ label: "Silver", href: "https://en.wikipedia.org/wiki/Silver" },
-			{ label: "Solid wood", href: "https://en.wikipedia.org/wiki/Wood" },
-			{ label: "Gold", href: "https://en.wikipedia.org/wiki/Gold" },
-			{ label: "Diamond", href: "https://en.wikipedia.org/wiki/Diamond" },
-			{ label: "Cotton", href: "https://en.wikipedia.org/wiki/Cotton" },
+			{ label: "Stainless steel" },
+			{ label: "Silver" },
+			{ label: "Solid wood" },
+			{ label: "Gold" },
+			{ label: "Diamond" },
+			{ label: "Cotton" },
 		],
 	},
 	{
 		title: "Body & Place",
 		items: [
-			{ label: "Strength training", href: "https://en.wikipedia.org/wiki/Strength_training" },
-			{ label: "Pilates", href: "https://en.wikipedia.org/wiki/Pilates" },
-			{ label: "Sauna", href: "https://en.wikipedia.org/wiki/Sauna" },
-			{ label: "Beach", href: "https://en.wikipedia.org/wiki/Beach" },
-			{ label: "Travelling", href: "https://en.wikipedia.org/wiki/Travel" },
-			{ label: "Jets", href: "https://en.wikipedia.org/wiki/Jet_aircraft", shout: true },
-			{ label: "Cars", href: "https://en.wikipedia.org/wiki/Car" },
+			{ label: "Strength training" },
+			{ label: "Pilates" },
+			{ label: "Sauna" },
+			{ label: "Beach" },
+			{ label: "Travelling" },
+			{ label: "Jets", shout: true },
+			{ label: "Cars" },
 		],
 	},
 	{
 		title: "Good Experiences",
 		items: [
-			{ label: "Petting zoos", href: "https://en.wikipedia.org/wiki/Petting_zoo" },
+			{ label: "Petting zoos" },
 			{ label: "Fine dining", href: "https://naeum.sg/" },
 			{ label: "Obscure travel destinations", href: "https://www.atlasobscura.com/" },
 			{ label: "Last minute plans", href: "https://www.kayak.com/" },
-			{
-				label: "Quiet fun with people I love",
-				href: "https://en.wikipedia.org/wiki/Quality_time",
-			},
+			{ label: "Quiet fun with people I love" },
 		],
 	},
 	{
@@ -94,9 +91,9 @@ const loves: { title: string; items: LoveItem[] }[] = [
 	{
 		title: "People & Faith",
 		items: [
-			{ label: "Family", href: "https://en.wikipedia.org/wiki/Family" },
-			{ label: "Kids", href: "https://en.wikipedia.org/wiki/Child" },
-			{ label: "God", href: "https://en.wikipedia.org/wiki/God" },
+			{ label: "Family" },
+			{ label: "Kids" },
+			{ label: "God" },
 		],
 	},
 ];
@@ -137,9 +134,13 @@ const loves: { title: string; items: LoveItem[] }[] = [
 								<ul class="gift-list">
 									{group.items.map((item) => (
 										<li class:list={[{ shout: item.shout }]}>
-											<a href={item.href} target="_blank" rel="noopener noreferrer">
-												{item.label}
-											</a>
+											{item.href ? (
+												<a href={item.href} target="_blank" rel="noopener noreferrer">
+													{item.label}
+												</a>
+											) : (
+												<span>{item.label}</span>
+											)}
 											{item.shout && <em class="shout-tag">LOVE JETS</em>}
 										</li>
 									))}
