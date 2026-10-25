@@ -1,15 +1,36 @@
 {
-  "name": "",
+  "name": "heymart",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
-    "astro": "astro"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "deploy": "npm run build && wrangler pages deploy .vercel/output/static",
+    "generate:types": "payload generate:types",
+    "migrate": "payload migrate",
+    "migrate:create": "payload migrate:create",
+    "seed": "tsx scripts/seed.ts"
   },
   "dependencies": {
-    "@astrojs/mdx": "^4.3.13",
-    "astro": "^5.17.1"
+    "@payloadcms/db-sqlite": "^3.15.1",
+    "@payloadcms/next": "^3.15.1",
+    "@payloadcms/richtext-lexical": "^3.15.1",
+    "@payloadcms/storage-r2": "^3.15.1",
+    "@payloadcms/ui": "^3.15.1",
+    "next": "^15.4.11",
+    "payload": "^3.15.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "sharp": "^0.33.5"
+  },
+  "devDependencies": {
+    "@cloudflare/next-on-pages": "^1.13.5",
+    "@types/node": "^22.10.5",
+    "@types/react": "^19.0.7",
+    "@types/react-dom": "^19.0.2",
+    "tsx": "^4.19.2",
+    "typescript": "5.7.2",
+    "wrangler": "^3.101.0"
   }
 }

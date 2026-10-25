@@ -1,0 +1,47 @@
+@font-face {
+  font-family: 'DistantGalaxy';
+  src: url('/fonts/DISTGRG_.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+.siteHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 34px;
+}
+
+.logoLink {
+  font-family: 'DistantGalaxy', sans-serif;
+  font-size: clamp(36px, 7vw, 62px);
+  line-height: 0.75;
+  background: linear-gradient(180deg, #ff8533 22%, #e43a1e 50%, #b31515 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-decoration: none;
+}
+
+.siteHeader nav {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+@media (max-width: 640px) {
+  .siteHeader {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .siteHeader nav {
+    flex-wrap: wrap;
+  }
+}
