@@ -1,0 +1,34 @@
+@font-face {
+  font-family: 'DistantGalaxy';
+  src: url('/fonts/DISTGRG_.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-family: Verdana, system-ui, sans-serif;
+  background: #3d3d3d;
+  color: #1a1a1a;
+}
+
+body {
+  min-height: 100vh;
+}
+
+a {
+  color: #1155cc;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+
+a:hover {
+  color: #0b3d91;
+}

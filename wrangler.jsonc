@@ -1,7 +1,21 @@
 {
   "name": "heymart",
   "compatibility_date": "2026-01-31",
+  "main": "worker.js",
+  "d1_databases": [
+    {
+      "binding": "D1",
+      "database_name": "heymart-db",
+      "database_id": "e752bf27-b893-4edf-bc84-d6c2f367e68f"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "R2",
+      "bucket_name": "heymart-media"
+    }
+  ],
   "assets": {
-    "directory": "./dist"
+    "directory": "./.next/static"
   }
 }
